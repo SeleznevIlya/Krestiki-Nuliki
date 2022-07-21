@@ -3,7 +3,7 @@ board = ['-', '-', '-',
          '-', '-', '-']
 
 
-def print_board_two(board):
+def print_board(board):
     '''
     Печатаем поле board
     '''
@@ -31,7 +31,7 @@ def players_input(token):
             print('Ошибка ввода. Введите число от 1 до 9!')
             continue
 
-def victory_condition(board_two):
+def victory_condition(board):
     '''
     Функция проверки условия победы
     В кортеже с кортежами внесены все выигрышные комбинации
@@ -44,12 +44,12 @@ def victory_condition(board_two):
                      (1, 4, 7), (2, 5, 8),
                      (0, 4, 8), (2, 4, 6))
     for one in vin_condition:
-        if board_two[one[0]] == board_two[one[1]] == board_two[one[2]] == 'X' \
-                or board_two[one[0]] == board_two[one[1]] == board_two[one[2]] == 'O':
-            return board_two[one[0]]
+        if board[one[0]] == board[one[1]] == board[one[2]] == 'X' \
+                or board[one[0]] == board[one[1]] == board[one[2]] == 'O':
+            return board[one[0]]
     return False
 
-def main(board_two):
+def main(board):
     """
     Главная функция для обработки всей игры
     Count необходим для смены хода(четный - 1 игрок, нечетный - 2 игрок)
@@ -58,33 +58,30 @@ def main(board_two):
     count = 0
     win_player = False
     while not win_player:
-        print_board_two(board_two)
-        if count % 2 == 0:
+        print_board(board) #печатаем поле на каждом ходу
+        if count % 2 == 0: #ход первого игрока
             players_input('X')
-        else:
+        else:               #ход второго игрока
             players_input('O')
         count += 1
-        if count > 4:
-            check = victory_condition(board_two)
-            if check:
+        if count > 4: #проверка условия победы
+            check = victory_condition(board)
+            if check: #==True
                 if count % 2 == 0:
                     print(f'Выйграл игрок O')
                     win_player = True
-                    break
                 elif count % 2 == 1:
                     print('Выйграл игрок X')
                     win_player = True
-                    break
                 elif count == 9:
                     print('Ничья')
-                    break
-    print_board_two(board_two)
+                    win_player = True
+    print_board(board)
 
 
 if __name__ == '__main__':
     main(board)
 
-print("hello world")
 
 
 
